@@ -1,0 +1,261 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+a {
+    color: blue;
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-warning {
+    color: #212529;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+.btn-info {
+    color: #fff;
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+}
+
+.btn-danger {
+    color: #fff;
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.main-content {
+    width: 50%;
+    border-radius: 20px;
+    box-shadow: 0 5px 5px rgba(0,0,0,.4);
+    margin: 5em auto;
+    display: flex;
+}
+
+.company__info {
+    background-color: #008080;
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    color: #fff;
+}
+
+.fa-android {
+    font-size: 3em;
+}
+
+@media screen and (max-width: 640px) {
+    .main-content {
+        width: 90%;
+    }
+
+    .company__info {
+        display: none;
+    }
+
+    .login_form {
+        border-top-left-radius: 20px;
+        border-bottom-left-radius: 20px;
+    }
+}
+
+@media screen and (min-width: 642px) and (max-width:800px) {
+    .main-content {
+        width: 90%;
+    }
+}
+
+.row > h2 {
+    color: #008080;
+}
+
+.login_form {
+    background-color: #fff;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    border-top: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+}
+
+form {
+    padding: 0 2em;
+}
+
+.form__input {
+    width: 100%;
+    border: 0px solid transparent;
+    border-radius: 0;
+    border-bottom: 1px solid #aaa;
+    padding: 1em .5em .5em;
+    padding-left: 2em;
+    outline: none;
+    margin: 1.5em auto;
+    transition: all .5s ease;
+}
+
+    .form__input:focus {
+        border-bottom-color: #008080;
+        box-shadow: 0 0 5px rgba(0,80,80,.4);
+        border-radius: 4px;
+    }
+
+.btn {
+    transition: all .5s ease;
+    width: 70%;
+    border-radius: 30px;
+    color: #008080;
+    font-weight: 600;
+    background-color: #fff;
+    border: 1px solid #008080;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
+    .btn:hover, .btn:focus {
+        background-color: #008080;
+        color: #fff;
+    }
+body {
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+/*Adding this styles to ActionDescription anchor Tag*/
+.sb-action-description p a {
+    background-color: #FFFFFF;
+    text-decoration: underline;
+}
+/* wwwroot/css/site.css */
+/* Aquí puedes añadir los estilos globales de tu aplicación */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 200px;
+    position: fixed;
+    height: 100%;
+    background: #fff;
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #333;
+        display: block;
+    }
+
+        .sidebar a:hover {
+            background: #ddd;
+        }
+
+.content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.procedure {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+    .procedure h3 {
+        margin: 0;
+    }
+
+    .procedure p {
+        margin: 5px 0 0;
+        color: #666;
+    }
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }

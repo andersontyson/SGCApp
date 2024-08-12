@@ -1,0 +1,128 @@
+﻿@model List<SGCApp.ViewModels.RolePermissionsViewModel>
+
+@{
+    ViewData["Title"] = "Lista de Roles y Permisos";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Roles y Permisos</h1>
+
+        <p>
+            <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+        </p>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th class="role-column">Rol</th>
+                    <th class="permissions-column">Permisos</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead> 
+            <tbody>
+              @if (Model != null)
+      {
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td class="role-column">@item.Role.Name</td>
+                        <td class="permissions-column">
+                            @if (item.Permissions.Any())
+                            {
+                                @string.Join(", ", item.Permissions.Select(p => p.Name))
+                            }
+                            else
+                            {
+                                <span>No hay permisos asignados</span>
+                            }
+                        </td>
+                        <td>
+                            <a href="@Url.Action("Edit", new { id = item.Role.Id })" class="btn btn-warning">Editar</a>
+                            <a href="@Url.Action("Delete", new { id = item.Role.Id })" class="btn btn-danger">Eliminar</a>
+                            <button class="btn btn-info" data-toggle="modal" data-target="#permissionsModal" data-role="@item.Role.Name" data-permissions='@Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(item.Permissions.Select(p => p.Name)))'>
+                                Ver Detalles
+                            </button>
+
+                        </td>
+                    </tr>
+                }
+            }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="permissionsModal" tabindex="-1" role="dialog" aria-labelledby="permissionsModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="permissionsModalLabel">Permisos del Rol</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="roleName"></p>
+                    <p id="permissionsList"></p> <!-- Cambiado de ul a p -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Incluir jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <!-- Incluir Bootstrap JS -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $('#permissionsModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Botón que disparó el modal
+            var roleName = button.data('role'); // Extraer info de datos
+            var permissions = button.data('rolepermissions'); // Extraer info de datos
+
+            console.log('Role Name:', roleName); // Verificar datos
+            console.log('Permissions:', permissions); // Verificar datos
+
+            var modal = $(this);
+            modal.find('.modal-title').text('Permisos del Rol: ' + roleName);
+            modal.find('#roleName').text('Rol: ' + roleName);
+            modal.find('#permissionsList').empty(); // Limpiar lista anterior
+
+            // Verificar si permissions tiene un valor válido
+            if (permissions) {
+                try {
+                    var permissionsArray = JSON.parse(permissions);
+
+                    // Verificar que permissionsArray sea un array
+                    if (Array.isArray(permissionsArray)) {
+                        // Llenar lista de permisos
+                        permissionsArray.forEach(function (permission) {
+                            modal.find('#permissionsList').append('<li>' + permission + '</li>');
+                        });
+                    } else {
+                        modal.find('#permissionsList').text('Formato de permisos no válido.');
+                    }
+                } catch (e) {
+                    console.error('Error parsing permissions JSON:', e);
+                    modal.find('#permissionsList').text('No se pudieron cargar los permisos.');
+                }
+            } else {
+                modal.find('#permissionsList').text('No se encontraron permisos.');
+            }
+        });
+    </script>
+
+</body>
+</html>

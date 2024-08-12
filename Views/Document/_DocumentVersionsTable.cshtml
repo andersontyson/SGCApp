@@ -1,0 +1,15 @@
+﻿@model IEnumerable<SGCApp.Models.DocumentVersion>
+
+@foreach (var documentVersion in Model)
+{
+    <tr>
+        <td><input type="checkbox" name="selectedVersions" value="@documentVersion.Id" /></td>
+        <td>@documentVersion.Id</td>
+        <td>@documentVersion.VersionNumber</td>
+        <td>@documentVersion.CreatedAt.ToString("dd/MM/yyyy hh:mm tt")</td>
+        <td>@documentVersion.ModifiedByUser.UserName</td>
+        <td>
+            <a asp-action="DownloaddocumentVersion" asp-route-id="@documentVersion.Id" class="btn btn-info">Descargar</a>
+        </td>
+    </tr>
+}

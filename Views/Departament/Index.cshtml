@@ -1,0 +1,39 @@
+﻿@model IEnumerable<SGCApp.Models.Departament>
+
+@{
+    ViewData["Title"] = "Lista de Departamentos";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<h2>Lista de Departamentos</h2>
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Departamento</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+     @if (Model != null)
+      {
+        @foreach (var item in Model)
+        {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+                
+            </td>
+            <td>
+                <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning">Editar</a>
+            </td>
+            
+        </tr>
+        }
+    }
+</table>

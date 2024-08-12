@@ -1,0 +1,66 @@
+﻿/* wwwroot/css/site.css */
+/* Aquí puedes añadir los estilos globales de tu aplicación */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.sidebar {
+    width: 200px;
+    position: fixed;
+    height: 100%;
+    background: #fff;
+    padding-top: 20px;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+    .sidebar a {
+        padding: 10px 15px;
+        text-decoration: none;
+        font-size: 18px;
+        color: #333;
+        display: block;
+    }
+
+        .sidebar a:hover {
+            background: #ddd;
+        }
+
+.content {
+    margin-left: 220px;
+    padding: 20px;
+}
+
+.procedure {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #fff;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+    .procedure h3 {
+        margin: 0;
+    }
+
+    .procedure p {
+        margin: 5px 0 0;
+        color: #666;
+    }
+
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 15px;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+    .btn:hover {
+        background-color: #0056b3;
+    }

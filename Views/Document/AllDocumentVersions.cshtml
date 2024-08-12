@@ -1,0 +1,120 @@
+﻿@model X.PagedList.IPagedList<SGCApp.Models.DocumentVersion>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Versiones de Documentos";
+    Layout = "~/Views/Shared/_LayoutSGC.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<h1>@ViewData["Title"]</h1>
+
+<form id="searchForm" method="get">
+    <div class="form-group">
+        <label>Buscar por:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchById" value="id" @(ViewData["SearchOption"]?.ToString() == "id" ? "checked" : "") />
+            <label class="form-check-label" for="searchById">ID</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByVersion" value="version" @(ViewData["SearchOption"]?.ToString() == "version" ? "checked" : "") />
+            <label class="form-check-label" for="searchByVersion">Versión</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByDate" value="date" @(ViewData["SearchOption"]?.ToString() == "date" ? "checked" : "") />
+            <label class="form-check-label" for="searchByDate">Fecha de Creación</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByUser" value="user" @(ViewData["SearchOption"]?.ToString() == "user" ? "checked" : "") />
+            <label class="form-check-label" for="searchByUser">Modificado Por</label>
+        </div>
+    </div>
+    <div class="input-container">
+        <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
+        </svg>
+        <input type="text" class="form-control no-border" id="searchString" name="searchString" placeholder="Buscar" value="@ViewData["CurrentFilter"]" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Documento Id.</th>
+            <th>Versión</th>
+            <th>Fecha de Creación</th>
+            <th>Modificado Por</th>
+            @* <th>Acciones</th> *@
+        </tr>
+    </thead>
+    <tbody id="documentVersionsTableBody">
+        @foreach (var documentVersion in Model)
+        {
+            <tr>
+                <td><input type="checkbox" name="selectedVersions" value="@documentVersion.Id" /></td>
+                <td>@documentVersion.DocumentId</td>
+                <td>@documentVersion.VersionNumber</td>
+                <td>@documentVersion.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td>@documentVersion.ModifiedByUser.UserName</td>
+                <td>
+                    @* <a asp-action="DownloadDocumentVersion" asp-route-id="@documentVersion.Id" class="btn btn-info">Descargar</a> *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="button-container">
+    @* <button id="compareButton" class="btn btn-primary">Comparar</button> *@
+    <a href="@Url.Action("Index", "Document")" class="btn btn-secondary">Atras</a>
+</div>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("AllDocumentVersions", new { id = ViewBag.DocumentId, page }))
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function fetchDocumentVersions() {
+                var searchString = $('#searchString').val();
+                var searchOption = $('input[name=searchOption]:checked').val();
+
+                $.ajax({
+                    url: '@Url.Action("SearchDocumentVersions", "Document")',
+                    type: 'GET',
+                    data: { searchString: searchString, searchOption: searchOption },
+                    success: function (result) {
+                        $('#documentVersionsTableBody').empty().html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+
+            $('#searchString').on('input', fetchDocumentVersions);
+            $('input[name=searchOption]').on('change', fetchDocumentVersions);
+
+            $('#compareButton').on('click', function () {
+                var selectedVersions = $('input[name="selectedVersions"]:checked');
+                if (selectedVersions.length !== 2) {
+                    alert('Por favor, seleccione exactamente dos versiones para comparar.');
+                    return;
+                }
+
+                var versionIds = selectedVersions.map(function () {
+                    return $(this).val();
+                }).get();
+
+                window.location.href = '@Url.Action("ShowVersionDifferences", "Document")' + '?versionId1=' + versionIds[0] + '&versionId2=' + versionIds[1];
+            });
+        });
+    </script>
+}

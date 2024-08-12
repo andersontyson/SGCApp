@@ -1,0 +1,248 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+	<PropertyGroup>
+		<TargetFramework>net8.0.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<UserSecretsId>1fc5e6a2-3b0b-4ff7-9a52-3ebef29f5276</UserSecretsId>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<DefineConstants>TRACE;RELEASE;$(SyncfusionLicensing)</DefineConstants>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(REDIS)' != ''">
+		<DefineConstants>$(DefineConstants);REDIS</DefineConstants>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Azure.Identity" Version="1.11.3" />
+		<PackageReference Include="Blazor.CkEditor5" Version="1.0.2" />
+		<PackageReference Include="CKEditor" Version="3.6.4" />
+		<PackageReference Include="ClosedXML" Version="0.102.2" />
+		<PackageReference Include="DocumentFormat.OpenXml" Version="3.0.2" />
+		<PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
+		<PackageReference Include="htmldiff.net" Version="1.4.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.4" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.5" />
+		<PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Identity.Client" Version="4.61.1" />
+		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" Condition="$(DefineConstants.Contains('REDIS'))" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.0" />
+		<PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="8.0.6" />
+		<PackageReference Include="Microsoft.Extensions.Caching.Redis" Version="2.2.0" Condition="$(DefineConstants.Contains('REDIS'))" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+		<PackageReference Include="OpenXmlPowerTools" Version="4.5.3.2" />
+		<PackageReference Include="Syncfusion.EJ2.AspNet.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.EJ2.GridExport.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.Compression.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.OfficeChart.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.DocIO.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.DocIORenderer.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.EJ2.WordEditor.AspNet.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.EJ2.PdfViewer.AspNet.Core.Windows" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.Pdf.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.Pdf.Imaging.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.XpsToPdfConverter.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.Presentation.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.PresentationRenderer.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.Licensing" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.XlsIORenderer.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.SkiaSharpHelper.Net.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.EJ2.Spreadsheet.AspNet.Core" Version="26.1.35" />
+		<PackageReference Include="Syncfusion.PdfToImageConverter.Net" Version="26.1.35" />
+		<PackageReference Include="System.Net.Http" Version="4.3.4" />
+		<PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
+		<PackageReference Include="X.PagedList" Version="10.0.3" />
+		<PackageReference Include="X.PagedList.Mvc.Core" Version="10.0.3" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Word\**" />
+		<Compile Remove="wwwroot\**\*;node_modules;runtimeconfig.template.json;" />
+		<None Update="wwwroot\**\*">
+			<CopyToPublishDirectory>Always</CopyToPublishDirectory>
+		</None>
+		<None Include="Controllers\**" CopyToOutputDirectory="Always" Condition="'$(Configuration)'=='Release'" />
+		<None Include="Views\**" CopyToOutputDirectory="Always" Condition="'$(Configuration)'=='Release'" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="wwwroot\XlsIO\bahnschrift.ttf" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Remove="Controllers\Grid\ServerSideExportingController.cs" />
+		<None Remove="Controllers\Grid\ServerSideExportingController.cs" />
+	</ItemGroup>
+
+	<!--Exclude the web-services when SB launches from Build-->
+	<ItemGroup>
+		<Compile Remove="ej2-web-services\**" />
+		<Content Remove="ej2-web-services\**" />
+		<Content Remove="Word\**" />
+		<EmbeddedResource Remove="ej2-web-services\**" />
+		<EmbeddedResource Remove="Word\**" />
+		<None Remove="ej2-web-services\**" />
+		<None Remove="Word\**" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Remove="Views\Document\_DocumentsTable.cshtml" />
+	  <Content Remove="Views\Document\_DocumentVersionsTable.cshtml" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Content Include="Properties\serviceDependencies.json" />
+	  <Content Include="Properties\serviceDependencies.local.json" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Infrastructure\" />
+	  <Folder Include="wwwroot\Procedures\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <None Include="Areas\Identity\Pages\Account\Login.cshtml" />
+	  <None Include="Areas\Identity\Pages\Account\Logout.cshtml" />
+	  <None Include="Areas\Identity\Pages\Account\Register.cshtml" />
+	  <None Include="Areas\Identity\Pages\Account\_ViewImports.cshtml" />
+	  <None Include="Areas\Identity\Pages\_ValidationScriptsPartial.cshtml" />
+	  <None Include="Areas\Identity\Pages\_ViewImports.cshtml" />
+	  <None Include="Areas\Identity\Pages\_ViewStart.cshtml" />
+	  <None Include="Pages\Error.cshtml" />
+	  <None Include="Pages\Indexs.cshtml" />
+	  <None Include="Pages\Privacy.cshtml" />
+	  <None Include="Pages\Shared\_Layout.cshtml" />
+	  <None Include="Pages\Shared\_ValidationScriptsPartial.cshtml" />
+	  <None Include="Pages\_ViewImports.cshtml" />
+	  <None Include="Pages\_ViewStart.cshtml" />
+	  <None Include="Properties\serviceDependencies.local.json.user" />
+	  <None Include="Views\Departament\Create.cshtml" />
+	  <None Include="Views\Departament\Delete.cshtml" />
+	  <None Include="Views\Departament\Edit.cshtml" />
+	  <None Include="Views\Departament\Index.cshtml" />
+	  <None Include="Views\DocumentEditorss\Default.cshtml" />
+	  <None Include="Views\Document\Create.cshtml" />
+	  <None Include="Views\Document\Details.cshtml" />
+	  <None Include="Views\Document\Edit.cshtml" />
+	  <None Include="Views\Document\EditExcel.cshtml" />
+	  <None Include="Views\Document\Index.cshtml" />
+	  <None Include="Views\Document\_DocumentsTable.cshtml" />
+	  <None Include="Views\Document\_DocumentVersionsTable.cshtml" />
+	  <None Include="Views\Home\Index.cshtml" />
+	  <None Include="Views\Permission\Create.cshtml" />
+	  <None Include="Views\Permission\Edit.cshtml" />
+	  <None Include="Views\Permission\Index.cshtml" />
+	  <None Include="Views\Procedure\Create.cshtml" />
+	  <None Include="Views\Procedure\Edit.cshtml" />
+	  <None Include="Views\Procedure\Index.cshtml" />
+	  <None Include="Views\Procedure\ShowVersionDifferences.cshtml" />
+	  <None Include="Views\RolePermission\Create.cshtml" />
+	  <None Include="Views\RolePermission\Edit.cshtml" />
+	  <None Include="Views\Role\Create.cshtml" />
+	  <None Include="Views\Role\Edit.cshtml" />
+	  <None Include="Views\Role\Index.cshtml" />
+	  <None Include="Views\Shared\Error.cshtml" />
+	  <None Include="Views\Shared\LayoutHeader.cshtml" />
+	  <None Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+	  <None Include="Views\_ViewImports.cshtml" />
+	  <None Include="Views\_ViewStart.cshtml" />
+	  <None Include="wwwroot\documents\CNT\ELABORAR DOCUMENTOS DEL SGI SOLIN.docx" />
+	  <None Include="wwwroot\documents\TI\CONTROL DE NO CONFORMIDADES.xlsx" />
+	  <None Include="wwwroot\documents\TI\CONTROLAR CAMBIOS AL SGI SOLIN LOGÍSTICA%28 Sin impresion%29.docx" />
+	  <None Include="wwwroot\documents\TI\DESCRIPCIÓN  DE JEFE DE CALIDAD SOLIN %281%29.doc" />
+	  <None Include="wwwroot\documents\TI\DESCRIPTIVO DE PUESTO GERENTE DE VENTAS SOLIN.docx" />
+	  <None Include="wwwroot\documents\TI\Diagrama de Gantt Machote SOLIN %282%29 %282%29.xlsx" />
+	  <None Include="wwwroot\documents\TI\Diagrama de Gantt Machote SOLIN %282%29.xlsx" />
+	  <None Include="wwwroot\js\ckeditor.js" />
+	  <None Include="wwwroot\js\site.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+	  <None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+	  <None Include="wwwroot\lib\bootstrap\LICENSE" />
+	  <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+	  <None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+	  <None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+	  <None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+	  <None Include="wwwroot\lib\jquery\dist\jquery.js" />
+	  <None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+	  <None Include="wwwroot\lib\jquery\dist\jquery.min.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-grid.rtl.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-reboot.rtl.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap-utilities.rtl.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\css\bootstrap.rtl.min.css.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.esm.min.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.js.map" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js" />
+		<None Include="wwwroot\lib\bootstrap\dist\js\bootstrap.min.js.map" />
+		<None Include="wwwroot\lib\bootstrap\LICENSE" />
+		<None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+		<None Include="wwwroot\lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+		<None Include="wwwroot\lib\jquery-validation\dist\additional-methods.js" />
+		<None Include="wwwroot\lib\jquery-validation\dist\additional-methods.min.js" />
+		<None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.js" />
+		<None Include="wwwroot\lib\jquery-validation\dist\jquery.validate.min.js" />
+		<None Include="wwwroot\lib\jquery-validation\LICENSE.md" />
+		<None Include="wwwroot\lib\jquery\dist\jquery.js" />
+		<None Include="wwwroot\lib\jquery\dist\jquery.min.js" />
+		<None Include="wwwroot\lib\jquery\dist\jquery.min.map" />	
+	</ItemGroup>
+
+</Project>

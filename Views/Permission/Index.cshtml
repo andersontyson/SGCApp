@@ -1,0 +1,54 @@
+﻿@model IPagedList<SGCApp.Models.Permission>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    
+</head>
+
+<h1>Permisos</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Crear Nuevo</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model != null)
+        {
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Description)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Category)</td>
+                    <td>
+                        <a href="@Url.Action("Edit", new { id = item.Id })" class="btn btn-warning">Editar</a>
+                        @* <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger">Eliminar</a> *@
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="4">No hay datos disponibles.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.Classic)
+</div>

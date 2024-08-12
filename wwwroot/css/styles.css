@@ -1,0 +1,316 @@
+﻿/* Estilos generales */
+body {
+    font-family: 'Public Sans', sans-serif;
+    background-color: #f8fafb;
+    min-height: 100vh;
+    display: flex;
+}
+
+nav {
+    background-color: #e8edf3;
+    width: 16rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Estilos para los ítems del menú */
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    position: relative; /* Agregado para submenú */
+}
+
+    .menu-item svg {
+        fill: #0e141b;
+    }
+
+    .menu-item p,
+    .menu-item a {
+        color: #0e141b;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: normal;
+    }
+
+    .menu-item:hover,
+    .menu-item.active {
+        background-color: #d2e0f2;
+    }
+
+/* Estilos para el submenú */
+.submenu {
+    display: none;
+    background-color: white;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: absolute;
+    left: 100%; /* Cambiado para mejor posicionamiento */
+    top: 0; /* Cambiado para mejor posicionamiento */
+}
+
+    .submenu a {
+        display: block;
+        padding: 0.5rem 1rem;
+        color: #4b5563;
+        font-size: 0.875rem;
+        transition: background-color 0.2s, color 0.2s;
+    }
+
+        .submenu a:hover {
+            background-color: #3b82f6;
+            color: white;
+        }
+
+    .submenu.active {
+        display: block;
+    }
+/* Estilos para el contenedor principal */
+main {
+    flex-grow: 1;
+    padding: 1rem;
+}
+
+/* Estilos para el contenedor del login parcial */
+.login-partial-container {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+}
+
+.login-section {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+
+.form-input {
+    display: block;
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    color: white;
+    background-color: #007bff;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+}
+
+.btn-primary {
+    background-color: #007bff;
+}
+
+/* Estilos para la vista de documentos */
+/*espacio de los radiobuttons*/
+.form-check-inline {
+    display: inline-block;
+    margin-right: 15px;
+}
+
+/* Estilos para input */
+.form-control {
+    display: block;
+    width: 50%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+    .form-control:focus {
+        color: #495057;
+        background-color: #fff;
+        border-color: #80bdff;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+
+.no-border {
+    border: none;
+    box-shadow: none;
+}
+/* Estilos para el contenedor del input con el SVG */
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+    /* Estilos para el input */
+    .input-container input {
+        padding-left: 2em; /* Espacio para el ícono de la lupa */
+    }
+
+    /* Estilos para el SVG dentro del input */
+    .input-container svg {
+        position: absolute;
+        left: 0.5em; /* Ajusta según sea necesario */
+        width: 1em; /* Ancho del SVG */
+        height: 1em; /* Alto del SVG */
+        fill: currentColor; /* Usa el color actual del texto del input */
+        pointer-events: none; /* Para que el SVG no interfiera con los clics en el input */
+    }
+
+.diff-insert {
+    background-color: #e6ffe6; /* Verde claro para inserciones */
+}
+
+.diff-delete {
+    background-color: #ffe6e6; /* Rojo claro para eliminaciones */
+}
+
+.diff-replace {
+    background-color: #ffffcc; /* Amarillo claro para reemplazos */
+}
+
+
+/*Estilos de registrar usuario*/
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.main-content {
+    background-color: #008080;
+    padding: 2px;
+    border-radius: px;
+    box-shadow: 0px 0px 15px 0px #000;
+    width: 150%; /* Ajusta el ancho según tus necesidades */
+}
+
+.form-floating {
+    margin-bottom: 15px;
+}
+
+.form-group-left {
+    text-align: left;
+}
+
+.form-control {
+    height: calc(3.5rem + 2px);
+    font-size: 1.2rem;
+}
+
+.form-check-label {
+    font-size: 1.2rem;
+}
+
+.container-fluid {
+    max-width: 1200px;
+}
+
+/*dropdown registro usuario*/
+.dropdown-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px; /* Espacio entre los dropdowns */
+}
+
+    .dropdown-container .form-group {
+        flex: 1;
+    }
+
+    .dropdown-container .form-control {
+        width: 100%;
+    }
+
+    /*Botones*/
+
+.form-group-buttons {
+    display: flex;
+    gap: 10px; /* Espacio entre los botones */
+}
+
+.btn {
+    flex: 1; /* Hace que los botones ocupen el mismo ancho */
+}
+
+.btn-cancel {
+    background-color: #6c757d; /* Color gris claro */
+    border-color: #6c757d;
+    color: white;
+}
+
+    .btn-cancel:hover {
+        background-color: #5a6268; /* Gris más oscuro */
+        border-color: #545b62;
+    }
+
+
+    /*tamaño de columna permisos en rolepermission*/
+/* styles.css */
+
+.permissions-column {
+    max-width: 100px; /* Ajusta el tamaño máximo según sea necesario */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.role-column {
+    max-width:35px; /* Tamaño fijo para la columna */
+    white-space: nowrap; /* Evita que el texto se envuelva */
+    overflow: hidden; /* Oculta el desbordamiento */
+    text-overflow: ellipsis; /* Añade puntos suspensivos al final del texto que no cabe */
+}
+
+
+
+.menu-item:hover .submenu {
+    display: block;
+}
+
+/*contenedor principal layout*/
+/*html, body {
+    height: 80%;
+    margin: 0;
+}*/
+
+body {
+    display: flex;
+    flex-direction: unset;
+}
+
+main {
+    background-color: #f8f9fa; /* Light background for main content */
+}
+
+.fixed-size {
+    width: 100%; /* Ensures the content takes the full width */
+    max-width: 3050px; /* Sets a max-width to ensure it doesn't get too wide */
+    margin: 0 auto; /* Centers the content */
+    height: 990px; /* Fixed height; adjust as needed */
+    overflow: auto; /* Adds scrollbars if content overflows */
+}
+
+.fixed-size {
+    height: calc(100vh - 120px); /* Ajusta esta altura según sea necesario VISTA PERMISSION INDEX*/
+    overflow-y: auto;
+}
+
+/*Espacio */
+.pagination li {
+    margin: 5px; /* Ajusta el espacio según sea necesario */
+}
+

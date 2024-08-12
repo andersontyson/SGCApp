@@ -1,0 +1,126 @@
+﻿@model X.PagedList.IPagedList<SGCApp.Models.ProcedureVersion>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@{
+    ViewData["Title"] = "Versiones de Procedimiento";
+    Layout = "~/Views/Shared/_LayoutSGC.cshtml";
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+</head>
+
+<h1>@ViewData["Title"]</h1>
+
+<form id="searchForm" method="get">
+    <div class="form-group">
+        <label>Buscar por:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchById" value="id" @(ViewData["SearchOption"]?.ToString() == "id" ? "checked" : "") />
+            <label class="form-check-label" for="searchById">ID</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByVersion" value="version" @(ViewData["SearchOption"]?.ToString() == "version" ? "checked" : "") />
+            <label class="form-check-label" for="searchByVersion">Versión</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByDate" value="date" @(ViewData["SearchOption"]?.ToString() == "date" ? "checked" : "") />
+            <label class="form-check-label" for="searchByDate">Fecha de Creación</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByUser" value="user" @(ViewData["SearchOption"]?.ToString() == "user" ? "checked" : "") />
+            <label class="form-check-label" for="searchByUser">Modificado Por</label>
+        </div>
+    </div>
+    <div class="input-container">
+        <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
+        </svg>
+        <input type="text" class="form-control no-border" id="searchString" name="searchString" placeholder="Buscar" value="@ViewData["CurrentFilter"]" />
+    </div>
+</form>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th></th>
+            <th>Id</th>
+            <th>Versión</th>
+            <th>Fecha de Creación</th>
+            <th>Modificado Por</th>
+            @* <th>Acciones</th> *@
+        </tr>
+    </thead>
+    <tbody id="procedureVersionsTableBody">
+        @foreach (var procedureVersion in Model)
+        {
+            <tr>
+                <td><input type="checkbox" name="selectedVersions" value="@procedureVersion.Id" /></td>
+                <td>@procedureVersion.Id</td>
+                <td>@procedureVersion.VersionNumber</td>
+                <td>@procedureVersion.CreatedAt.ToString("dd/MM/yyyy hh:mm tt")</td>
+                <td>@procedureVersion.ModifiedByUser.UserName</td>
+                <td>
+                    @* <a asp-action="DownloadProcedureVersion" asp-route-id="@procedureVersion.Id" class="btn btn-info">Descargar</a> *@
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="button-container">
+    @* <button id="compareButton" class="btn btn-primary">Comparar</button> *@
+    <button type="button" id="cancelButton" class="e-btn e-secondary">Atras</button>
+
+</div>
+
+<div>
+    @Html.PagedListPager(Model, page => Url.Action("AllProcedureVersions", new { id = ViewBag.ProcedureId, page }))
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            function fetchProcedureVersions() {
+                var searchString = $('#searchString').val();
+                var searchOption = $('input[name=searchOption]:checked').val();
+
+                $.ajax({
+                    url: '@Url.Action("SearchProcedureVersions", "Procedure")',
+                    type: 'GET',
+                    data: { searchString: searchString, searchOption: searchOption },
+                    success: function (result) {
+                        $('#procedureVersionsTableBody').empty().html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+
+            $('#searchString').on('input', fetchProcedureVersions);
+            $('input[name=searchOption]').on('change', fetchProcedureVersions);
+
+            $('#compareButton').on('click', function () {
+                var selectedVersions = $('input[name="selectedVersions"]:checked');
+                if (selectedVersions.length !== 2) {
+                    alert('Por favor, seleccione exactamente dos versiones para comparar.');
+                    return;
+                }
+
+                var versionIds = selectedVersions.map(function () {
+                    return $(this).val();
+                }).get();
+
+                window.location.href = '@Url.Action("ShowVersionDifferences", "Procedure")' + '?versionId1=' + versionIds[0] + '&versionId2=' + versionIds[1];
+            });
+
+            $('#cancelButton').on('click', function () {
+                window.location.href = '@Url.Action("Index", "Procedure")';
+            });
+        });
+    </script>
+}

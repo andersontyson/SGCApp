@@ -1,0 +1,63 @@
+﻿@model SGCApp.Models.DocumentViewModel
+
+@{
+    ViewData["Title"] = "Edit Excel Document";
+}
+
+<h2>Edit Excel Document</h2>
+
+<form asp-action="Edit">
+    <div class="form-group">
+        <label asp-for="Title" class="control-label"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+         <label>Content</label> 
+        <div id="ss" style="width: 100%; height: 600px;"></div>
+        <textarea asp-for="Content" id="Content" class="form-control" style="display:none"></textarea>
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save" class="btn btn-primary" />
+    </div>
+</form>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+    <script src="https://cdn.grapecity.com/spreadjs/14.1.0/scripts/gc.spread.sheets.all.min.js"></script>
+    <script src="https://cdn.grapecity.com/spreadjs/14.1.0/scripts/gc.spread.excelio.min.js"></script>
+    <link href="https://cdn.grapecity.com/spreadjs/14.1.0/styles/gc.spread.sheets.excel2016colorful.css" rel="stylesheet" type="text/css" />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var spread = new GC.Spread.Sheets.Workbook(document.getElementById('ss'), { sheetCount: 1 });
+            var sheet = spread.getActiveSheet();
+
+            // Cargar el contenido desde el modelo
+            var content = @Html.Raw(Json.Serialize(Model.Content));
+            var excelIO = new GC.Spread.Excel.IO();
+            var contentBlob = new Blob([content], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+            excelIO.open(contentBlob, function (json) {
+                spread.fromJSON(json);
+            }, function (error) {
+                console.log(error);
+            });
+
+            // Guardar el contenido de SpreadJS en el textarea antes de enviar el formulario
+            document.querySelector('form').addEventListener('submit', function () {
+                excelIO.save(spread.toJSON(), function (blob) {
+                    var reader = new FileReader();
+                    reader.onload = function () {
+                        document.getElementById('Content').value = reader.result;
+                    };
+                    reader.readAsText(blob);
+                }, function (e) {
+                    console.log(e);
+                });
+            });
+        });
+    </script>
+}

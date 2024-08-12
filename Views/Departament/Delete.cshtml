@@ -1,0 +1,24 @@
+﻿@model SGCApp.Models.Departament
+
+@{
+    ViewData["Title"] = "Eliminar Departamento";
+}
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+<h1>Eliminar Departamento</h1>
+
+<h3>¿Está seguro que desea eliminar este departamento?</h3>
+
+<div>
+    <h4>@Model.Name</h4>
+</div>
+
+<form asp-action="DeleteConfirmed" method="post">
+    <input type="hidden" asp-for="Id" />
+    <div class="form-group">
+        <input type="submit" value="Eliminar" class="btn btn-danger" />
+        <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+    </div>
+</form>

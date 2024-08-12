@@ -1,0 +1,27 @@
+﻿@using SGCApp.Models
+
+@{
+    var version1 = ViewData["Version1"] as ProcedureVersion;
+    var version2 = ViewData["Version2"] as ProcedureVersion;
+}
+
+<h1>Diferencias entre versiones</h1>
+
+<h3>Versión 1: @version1.VersionNumber</h3>
+<h3>Versión 2: @version2.VersionNumber</h3>
+
+<div style="display: flex;">
+    <div style="width: 50%; padding: 10px;">
+        <h4>Versión 1: @version1.VersionNumber</h4>
+        @Html.Raw(ViewData["Version1Html"] as string)
+    </div>
+    <div style="width: 50%; padding: 10px;">
+        <h4>Versión 2: @version2.VersionNumber</h4>
+        @Html.Raw(ViewData["Version2Html"] as string)
+    </div>
+</div>
+
+<h3>Diferencias resaltadas:</h3>
+<div style="border: 1px solid #ccc; padding: 10px;">
+    @Html.Raw(ViewData["DiffHtml"] as string)
+</div>

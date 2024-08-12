@@ -1,0 +1,22 @@
+﻿@model SGCApp.Models.DocumentViewModel
+
+@{
+    ViewData["Title"] = "Detalles del Documento";
+    Layout = "~/Views/Shared/_LayoutSGC.cshtml";
+  }
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+
+<h1>@Model.Title</h1>
+<div>
+    @* @Html.Raw(Model.Content) <!-- Renderiza el contenido HTML almacenado --> *@
+</div>
+<p>Creado el: @Model.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+<p>Última actualización: @Model.UpdatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.Id">Editar</a> |
+    <a asp-action="Index">Volver a la Lista</a>
+</div>

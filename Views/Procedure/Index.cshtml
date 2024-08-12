@@ -1,0 +1,103 @@
+﻿@model IPagedList<SGCApp.Models.Procedure>
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
+@{
+    ViewData["Title"] = "Procedimientos";
+    Layout = "~/Views/Shared/_LayoutSGC.cshtml";
+   }
+
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+
+<h1>Procedimientos</h1>
+
+<form id="searchForm" method="get">
+    <div class="form-group">
+        <label>Buscar por:</label>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchById" value="id" @(ViewData["SearchOption"]?.ToString() == "id" ? "checked" : "") />
+            <label class="form-check-label" for="searchById">ID</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByTitle" value="title" @(ViewData["SearchOption"]?.ToString() == "title" ? "checked" : "") />
+            <label class="form-check-label" for="searchByTitle">Título</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="searchOption" id="searchByDate" value="date" @(ViewData["SearchOption"]?.ToString() == "date" ? "checked" : "") />
+            <label class="form-check-label" for="searchByDate">Fecha de Creación</label>
+        </div>
+    </div>
+    <div></div>
+    <div class="input-container">
+        <svg viewBox="0 0 256 256" xmlns="http://www.w3.org/2000/svg">
+            <path d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z" />
+        </svg>
+        <input type="text" class="form-control no-border" id="searchString" name="searchString" placeholder="Buscar por ID, Título o Fecha de Creación" value="@ViewData["CurrentFilter"]" />
+    </div>
+</form>
+
+<div class="mb-3">
+    <a asp-action="Create" class="btn btn-primary">Crear</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Título</th>
+            <th>Fecha de Creación</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="proceduresTableBody">
+         @if (Model != null)
+      {
+        @foreach (var procedure in Model)
+        {
+            <tr>
+                <td>@procedure.Id</td>
+                <td>@procedure.Title</td>
+                 <td>@procedure.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @* <a href="@Url.Action("Details", new { id = procedure.Id })" class="btn btn-info">Detalles</a> *@
+                    <a href="@Url.Action("Edit", new { id = procedure.Id })" class="btn btn-warning">Editar</a>
+
+                    <a href="@Url.Action("AllProcedureVersions", new { id = procedure.Id })" class="btn btn-info">Ver Versiones</a>
+                </td>
+            </tr>
+
+        }    
+      }
+    </tbody>
+</table>
+<div class="text-center">
+    @Html.PagedListPager(Model, page => Url.Action("Index", new { page }), PagedListRenderOptions.Classic)
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function fetchProcedures() {
+                var searchString = $('#searchString').val();
+                var searchOption = $('input[name=searchOption]:checked').val();
+
+                $.ajax({
+                    url: '@Url.Action("SearchProcedures", "Procedure")',
+                    type: 'GET',
+                    data: { searchString: searchString, searchOption: searchOption },
+                    success: function (result) {
+                        $('#proceduresTableBody').empty().html(result);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                    }
+                });
+            }
+
+            $('#searchString').on('input', fetchProcedures);
+            $('input[name=searchOption]').on('change', fetchProcedures);
+        });
+    </script>
+}

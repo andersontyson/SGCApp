@@ -1,0 +1,28 @@
+﻿@model SGCApp.Models.Departament
+
+
+<head>
+    <link rel="stylesheet" href="~/css/styles.css" />
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+</head>
+
+<h2>Crear Nuevo Departamento</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-floating mb-3">
+        @Html.LabelFor(model => model.Name)
+        <input asp-for="Name" class="form__input" autocomplete="off" aria-required="true" placeholder="Nombre del departamento" />
+        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="button-container">
+        <input type="submit" value="Guardar" class="btn btn-primary" />
+        <a href="@Url.Action("Index", "Departament")" class="btn btn-secondary">Atras</a>
+    </div>
+}
+
+

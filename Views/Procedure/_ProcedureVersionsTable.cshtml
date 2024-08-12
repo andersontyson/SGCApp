@@ -1,0 +1,15 @@
+﻿@model IEnumerable<SGCApp.Models.ProcedureVersion>
+
+@foreach (var procedureVersion in Model)
+{
+    <tr>
+        <td><input type="checkbox" name="selectedVersions" value="@procedureVersion.Id" /></td>
+        <td>@procedureVersion.Id</td>
+        <td>@procedureVersion.VersionNumber</td>
+        <td>@procedureVersion.CreatedAt.ToString("dd/MM/yyyy hh:mm tt")</td>
+        <td>@procedureVersion.ModifiedByUser.UserName</td>
+        <td>
+            <a asp-action="DownloadProcedureVersion" asp-route-id="@procedureVersion.Id" class="btn btn-info">Descargar</a>
+        </td>
+    </tr>
+}
